@@ -2,6 +2,11 @@
     ViewData["Title"] = "Home Page";
 
 
+
+}
+
+
+
 }
 @section Scripts {
     <script src="~/frontend/main.js" asp-append-version="true"></script>
@@ -19,6 +24,7 @@
 @model ParkView.ViewModels.IndexViewModel;
 
 <partial name="_SearchFormPartial" >
+
 
 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
@@ -82,6 +88,41 @@
         </div>
 </div>
 
+
+
+@if( Model.rooms.Count > 0 )
+    {
+        @foreach (var item in Model.rooms)
+        {
+            // Code for Sairama
+          
+        }
+
+        //button to navigate/reload the home page
+    }
+    else
+    {
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img height="400" src="https://www.tourmyindia.com/destination_india/image/north-india-banner.webp" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img height="400" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXv1_nEMZiz5I-_hqjHscWqxEzx14oKYJnVw&usqp=CAU" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img height="400" src="https://ichef.bbci.co.uk/news/976/cpsprodpb/14AF0/production/_126902748_gettyimages-1031430214-170667a.jpg" class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
 
 
         <app-root></app-root>

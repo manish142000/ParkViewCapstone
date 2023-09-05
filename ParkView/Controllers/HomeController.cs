@@ -29,7 +29,60 @@ namespace ParkView.Controllers
 
         public IActionResult Index()
         {
-            //return View(_hotelDbContext.roomCategories.ToArray());
+
+            IndexViewModel obj = new IndexViewModel
+            {
+                rooms = new List<Room>()
+            };
+            
+            return View(obj);
+        }
+
+        [HttpPost]
+        public IActionResult Index(IndexViewModel form)
+        {
+            IEnumerable<Hotel> Hotels = _hotel.GetHotelsByLocation(form.destination);
+
+
+            List<Room> rooms = new List<Room>();
+            foreach( var hotel in Hotels )
+            {
+                rooms.AddRange( _room.GetRoomsByHotelId(hotel.HotelId) );
+            }
+
+            List<BookingRoom> bookedRooms = _bookingroom.BookedRooms();
+
+
+            if( bookedRooms.Any() )
+            {
+                foreach (var bookedroom in bookedRooms)
+                {
+                    Booking booking = _context.bookings.FirstOrDefault(x => x.BookingId == bookedroom.BookingId);
+
+                    Room room = _context.rooms.FirstOrDefault(x => x.RoomId == bookedroom.RoomId);
+
+                    if( booking != null)
+                    {
+                        if ((booking.CheckInDate > form.check_in && booking.CheckOutDate < form.check_out) || (booking.CheckInDate > form.check_in && booking.CheckOutDate < form.check_out))
+                        {
+                            rooms.Remove(room);
+                        }
+                    }
+                }
+            }
+
+            IndexViewModel obj = new IndexViewModel
+            {
+                rooms = rooms
+            };
+
+            return View(obj);
+
+        }
+
+        public IActionResult Rooms()
+        {
+            
             return View();
         }
 
