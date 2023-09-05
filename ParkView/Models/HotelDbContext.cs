@@ -25,6 +25,7 @@ namespace ParkView.Models
 
         public DbSet<DiscountCoupon> discountCoupons { get; set; }  
 
+        public DbSet<BookingCartItem> bookingCartItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
