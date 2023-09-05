@@ -15,6 +15,7 @@ namespace ParkView.Controllers
 
         public IActionResult Index()
         {
+            //return View(_hotelDbContext.roomCategories.ToArray());
             return View();
         }
 

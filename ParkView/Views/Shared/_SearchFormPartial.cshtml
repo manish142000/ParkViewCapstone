@@ -5,11 +5,20 @@
 }
 @model ParkView.Models.SearchForm
 
+<style>
+    .form-control {
+        width: 200px;
+    }
+
+    p {
+        font-weight: 600;
+    }
+</style>
 <form class="form" method="Post" asp-controller="Home" asp-action="Index">
     <div class="filter">
         <div class="filter-item">
             <p>Destination</p>
-            <input asp-for="destination" class="form-control" type="text" placeholder="Destination" />
+            <input asp-for="destination" class="form-control" type="text" placeholder="Destination"/>
         </div>
         <div class="filter-item">
             <p>Check-in</p>
