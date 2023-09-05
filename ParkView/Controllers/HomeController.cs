@@ -14,17 +14,19 @@ namespace ParkView.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly HotelDbContext _context;
         private readonly IHotel _hotel;
+        private readonly IRoomCategory _roomCategory;
         private readonly IRoom _room;
         private readonly IBookingRoom _bookingroom;
 
         public HomeController(ILogger<HomeController> logger, HotelDbContext context
-            , IHotel hotel, IRoom room, IBookingRoom bookingroom)
+            , IHotel hotel, IRoom room, IBookingRoom bookingroom, IRoomCategory roomCategory)
         {
             _logger = logger;
             _context = context;
             _hotel = hotel;
             _room = room;
             _bookingroom = bookingroom;
+            _roomCategory = roomCategory;
         }
 
         public IActionResult Index()
@@ -57,23 +59,41 @@ namespace ParkView.Controllers
             {
                 foreach (var bookedroom in bookedRooms)
                 {
+
+
                     Booking booking = _context.bookings.FirstOrDefault(x => x.BookingId == bookedroom.BookingId);
 
                     Room room = _context.rooms.FirstOrDefault(x => x.RoomId == bookedroom.RoomId);
 
                     if( booking != null)
                     {
-                        if ((booking.CheckInDate > form.check_in && booking.CheckOutDate < form.check_out) || (booking.CheckInDate > form.check_in && booking.CheckOutDate < form.check_out))
+                        if ((booking.CheckOutDate >= form.check_in &&  booking.CheckInDate <= form.check_in ) || (booking.CheckInDate <= form.check_out && booking.CheckOutDate >= form.check_out))
                         {
                             rooms.Remove(room);
                         }
                     }
                 }
             }
+            List<RoomCategory> roomTypes = _roomCategory.GetAllCategories().ToList();
+            string[] imgUrls = new string[roomTypes.Count];
+            string[] roomTypeNames = new string[roomTypes.Count()];
+            for(int i = 0; i  < roomTypes.Count; i++)
+            {
+                roomTypeNames[i] = roomTypes[i].CategoryName;
+                imgUrls[i] = roomTypes[i].ImageUrl;
+            }
 
+            int[] avlRooms = new int[roomTypes.Count()];
+            foreach (var avlRoom in rooms)
+            {
+                avlRooms[avlRoom.RoomCategoryId - 1] ++;
+            }
             IndexViewModel obj = new IndexViewModel
             {
-                rooms = rooms
+                rooms = rooms,
+                roomTypeNames = roomTypeNames,
+                imageUrls = imgUrls,
+                availableRooms = avlRooms                
             };
 
             return View(obj);
