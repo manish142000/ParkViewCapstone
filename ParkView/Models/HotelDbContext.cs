@@ -129,7 +129,7 @@ namespace ParkView.Models
                     RoomCategoryId = 1,
                     CategoryName = "Presidential Suite",
                     DailyRate = 28000,
-                    ImageUrl = "~/images/presdidential-suite.jpg"
+                    ImageUrl = "~/images/presidential-suite.jpg"
                 });
 
             modelBuilder.Entity<RoomCategory>().HasData(

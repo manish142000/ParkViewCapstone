@@ -26,5 +26,9 @@ namespace ParkView.ViewModels
 
         public List<Room> rooms { get; set; }
 
+        public string[] roomTypeNames { get; set; }
+        public string[] imageUrls { get; set; }
+        public int[] availableRooms { get; set; }
+
     }
 }

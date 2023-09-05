@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ParkView.Models;
 
@@ -11,9 +12,10 @@ using ParkView.Models;
 namespace ParkView.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    partial class HotelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230905094821_withCoupons")]
+    partial class withCoupons
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2854,7 +2856,7 @@ namespace ParkView.Migrations
                             RoomCategoryId = 1,
                             CategoryName = "Presidential Suite",
                             DailyRate = 28000,
-                            ImageUrl = "~/images/presidential-suite.jpg"
+                            ImageUrl = "~/images/presdidential-suite.jpg"
                         },
                         new
                         {
