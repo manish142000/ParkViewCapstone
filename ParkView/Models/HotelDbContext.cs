@@ -30,6 +30,57 @@ namespace ParkView.Models
         {
             base.OnModelCreating(modelBuilder);
 
+            //seeding the Coupon
+
+            modelBuilder.Entity<DiscountCoupon>().HasData(
+                    new DiscountCoupon
+                    {
+                        CouponId = 1,
+                        CouponName = "Summer Discount",
+                        DiscountAmount = 10
+                    }
+                );
+
+            modelBuilder.Entity<DiscountCoupon>().HasData(
+                    new DiscountCoupon
+                    {
+                        CouponId = 2,
+                        CouponName = "Monsoon Discount",
+                        DiscountAmount = 20
+                    }
+                );
+
+            modelBuilder.Entity<DiscountCoupon>().HasData(
+                    new DiscountCoupon
+                    {
+                        CouponId = 3,
+                        CouponName = "Winter Discount",
+                        DiscountAmount = 30
+                    }
+                );
+
+            //seeding the Booking table
+
+            modelBuilder.Entity<Booking>().HasData(
+                new Booking
+                {
+                    BookingId = 1,
+                    UserEmail = "testuser123@gmail.com",
+                    CheckInDate = DateTime.Parse("2023-09-15T13:45:30"),
+                    CheckOutDate = DateTime.Parse("2023-09-23T13:45:30"),
+                    CouponId = 1
+                }
+                );
+
+            modelBuilder.Entity<BookingRoom>().HasData(
+                new BookingRoom
+                {
+                    BookingRoomId = 1,
+                    RoomId = "O-PS01",
+                    BookingId = 1
+                }
+                );
+
             // Seeding the hotels table
             modelBuilder.Entity<Hotel>().HasData(
                 new Hotel

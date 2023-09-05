@@ -8,6 +8,8 @@
         public Hotel GetHotelById(int id);
 
         public IEnumerable<Hotel> GetHotelsByLocation(string Location);
+
+
         
     }
 }
