@@ -21,6 +21,7 @@
 
         public IEnumerable<Hotel> GetHotelsByLocation(string Location)
         {
+
             return _context.hotels.Where(x => x.Location.ToLower().Contains(Location.ToLower()));
         }
     }
