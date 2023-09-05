@@ -15,6 +15,7 @@ namespace ParkView
             builder.Services.AddScoped<IRoom, RoomDbRepo>();
             builder.Services.AddScoped<IRoomCategory, RoomCategoryDbRepo>();
             builder.Services.AddScoped<IHotel, HotelDbRepo>();
+            builder.Services.AddScoped<IBookingRoom, BookinRoomDbRepo>();
             // Add services to the container.
             builder.Services.AddControllersWithViews()
     .AddJsonOptions(options =>

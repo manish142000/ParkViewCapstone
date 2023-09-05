@@ -1,5 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+
+
 }
 @section Scripts {
     <script src="~/frontend/main.js" asp-append-version="true"></script>
@@ -14,6 +16,7 @@
 
 @*<app-root></app-root>*@
 
+@model ParkView.ViewModels.IndexViewModel;
 
 <partial name="_SearchFormPartial" >
 
@@ -81,4 +84,7 @@
 
 
 
-<app-root></app-root>
+        <app-root></app-root>
+        
+    }
+

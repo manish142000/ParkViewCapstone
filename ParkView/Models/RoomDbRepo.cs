@@ -1,4 +1,6 @@
-﻿namespace ParkView.Models
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace ParkView.Models
 {
     public class RoomDbRepo : IRoom
     {
@@ -25,7 +27,7 @@
 
         public IEnumerable<Room> GetRoomsByHotelId(int HotelId)
         {
-            return _context.rooms.Where( x => x.HotelId == HotelId );
+            return _context.rooms.Where( x => x.HotelId == HotelId ).Include(c => c.RoomCategory);
         }
     }
 }
