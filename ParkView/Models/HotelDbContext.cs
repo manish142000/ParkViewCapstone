@@ -128,7 +128,8 @@ namespace ParkView.Models
                 {
                     RoomCategoryId = 1,
                     CategoryName = "Presidential Suite",
-                    DailyRate = 28000
+                    DailyRate = 28000,
+                    ImageUrl = "~/images/presdidential-suite.jpg"
                 });
 
             modelBuilder.Entity<RoomCategory>().HasData(
@@ -136,7 +137,8 @@ namespace ParkView.Models
                 {
                     RoomCategoryId = 2,
                     CategoryName = "Executive",
-                    DailyRate = 20000
+                    DailyRate = 20000,
+                    ImageUrl = "~/images/executive.jpg"
                 });
 
             modelBuilder.Entity<RoomCategory>().HasData(
@@ -144,7 +146,8 @@ namespace ParkView.Models
                 {
                     RoomCategoryId = 3,
                     CategoryName = "Super Deluxe",
-                    DailyRate = 14000
+                    DailyRate = 14000,
+                    ImageUrl = "~/images/super-deluxe.jpg"
                 });
 
             modelBuilder.Entity<RoomCategory>().HasData(
@@ -152,7 +155,8 @@ namespace ParkView.Models
                 {
                     RoomCategoryId = 4,
                     CategoryName = "Deluxe",
-                    DailyRate = 8000
+                    DailyRate = 8000,
+                    ImageUrl = "~/images/deluxe.jpeg"
                 });
 
             // Seeding the rooms table

@@ -8,5 +8,6 @@ namespace ParkView.Models
         public int RoomCategoryId { set; get; }
         public string CategoryName { get; set; }
         public int DailyRate { get; set; }
+        public string ImageUrl { get; set; }
     }
 }
