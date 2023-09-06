@@ -272,6 +272,31 @@ namespace ParkView.Migrations
                         });
                 });
 
+            modelBuilder.Entity("ParkView.Models.BookingCartItem", b =>
+                {
+                    b.Property<int>("BookingCartItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingCartItemId"), 1L, 1);
+
+                    b.Property<string>("BookingCartId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoomCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("BookingCartItemId");
+
+                    b.HasIndex("RoomCategoryId");
+
+                    b.ToTable("bookingCartItems");
+                });
+
             modelBuilder.Entity("ParkView.Models.BookingRoom", b =>
                 {
                     b.Property<int>("BookingRoomId")
@@ -2964,6 +2989,17 @@ namespace ParkView.Migrations
                         .IsRequired();
 
                     b.Navigation("DiscountCoupon");
+                });
+
+            modelBuilder.Entity("ParkView.Models.BookingCartItem", b =>
+                {
+                    b.HasOne("ParkView.Models.RoomCategory", "RoomCategory")
+                        .WithMany()
+                        .HasForeignKey("RoomCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RoomCategory");
                 });
 
             modelBuilder.Entity("ParkView.Models.BookingRoom", b =>

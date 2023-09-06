@@ -77,7 +77,7 @@ namespace ParkView.Controllers
             List<RoomCategory> roomTypes = _roomCategory.GetAllCategories().ToList();
             string[] imgUrls = new string[roomTypes.Count];
             string[] roomTypeNames = new string[roomTypes.Count()];
-            for(int i = 0; i  < roomTypes.Count; i++)
+            for (int i = 0; i < roomTypes.Count; i++)
             {
                 roomTypeNames[i] = roomTypes[i].CategoryName;
                 imgUrls[i] = roomTypes[i].ImageUrl;
@@ -86,14 +86,14 @@ namespace ParkView.Controllers
             int[] avlRooms = new int[roomTypes.Count()];
             foreach (var avlRoom in rooms)
             {
-                avlRooms[avlRoom.RoomCategoryId - 1] ++;
+                avlRooms[avlRoom.RoomCategoryId - 1]++;
             }
             IndexViewModel obj = new IndexViewModel
             {
                 rooms = rooms,
                 roomTypeNames = roomTypeNames,
                 imageUrls = imgUrls,
-                availableRooms = avlRooms                
+                availableRooms = avlRooms
             };
 
             return View(obj);

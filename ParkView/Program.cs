@@ -27,7 +27,7 @@ namespace ParkView
 
             builder.Services.AddDbContext<HotelDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-                        builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<HotelDbContext>();
 
             builder.Services.AddAuthentication().AddGoogle(
@@ -36,6 +36,10 @@ namespace ParkView
                     googleoptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
                     googleoptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
                 });
+
+            builder.Services.AddScoped<BookingCart>(sp => BookingCart.GetCart(sp));
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddSession();
 
             var app = builder.Build();
 
@@ -51,9 +55,9 @@ namespace ParkView
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
-                        app.UseAuthentication();;
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

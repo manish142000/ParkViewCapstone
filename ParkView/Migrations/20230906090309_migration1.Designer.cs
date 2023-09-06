@@ -12,8 +12,8 @@ using ParkView.Models;
 namespace ParkView.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    [Migration("20230905094821_withCoupons")]
-    partial class withCoupons
+    [Migration("20230906090309_migration1")]
+    partial class migration1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -272,6 +272,31 @@ namespace ParkView.Migrations
                             TotalCost = 0.0,
                             UserEmail = "testuser123@gmail.com"
                         });
+                });
+
+            modelBuilder.Entity("ParkView.Models.BookingCartItem", b =>
+                {
+                    b.Property<int>("BookingCartItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingCartItemId"), 1L, 1);
+
+                    b.Property<string>("BookingCartId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoomCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("BookingCartItemId");
+
+                    b.HasIndex("RoomCategoryId");
+
+                    b.ToTable("bookingCartItems");
                 });
 
             modelBuilder.Entity("ParkView.Models.BookingRoom", b =>
@@ -2856,7 +2881,7 @@ namespace ParkView.Migrations
                             RoomCategoryId = 1,
                             CategoryName = "Presidential Suite",
                             DailyRate = 28000,
-                            ImageUrl = "~/images/presdidential-suite.jpg"
+                            ImageUrl = "~/images/presidential-suite.jpg"
                         },
                         new
                         {
@@ -2966,6 +2991,17 @@ namespace ParkView.Migrations
                         .IsRequired();
 
                     b.Navigation("DiscountCoupon");
+                });
+
+            modelBuilder.Entity("ParkView.Models.BookingCartItem", b =>
+                {
+                    b.HasOne("ParkView.Models.RoomCategory", "RoomCategory")
+                        .WithMany()
+                        .HasForeignKey("RoomCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RoomCategory");
                 });
 
             modelBuilder.Entity("ParkView.Models.BookingRoom", b =>

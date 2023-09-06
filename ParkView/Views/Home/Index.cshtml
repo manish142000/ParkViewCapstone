@@ -33,7 +33,7 @@
                         <div class="card-body">
                             <h5 class="card-text">@Model.roomTypeNames[i]</h5>
                             <p>Available Rooms: @Model.availableRooms[i]</p>
-                            <a class="btn btn-success" asp-controller="Home" asp-action="Index">Book Now</a>
+                            <a class="btn btn-success" asp-controller="BookingCart" asp-action="AddToBookingCart" asp-route-RoomCategoryId=@(i+1)>Book Now</a>
                         </div>
                     </div>
                 }
