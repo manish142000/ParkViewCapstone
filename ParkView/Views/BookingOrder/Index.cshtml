@@ -1,0 +1,63 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model ParkView.Models.CheckOut;
+
+<h4>Order Review</h4>
+
+<form asp-action="Index" method="post">
+    <div class="form-group">
+        <label asp-for="FullName" class="control-label">Full Name</label>
+        <input asp-for="FullName" class="form-control"/>
+        <span asp-validation-for="FullName" class="text-danger" ></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Email" class="control-label">Email:</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Address" class="control-label">Address</label>
+        <input asp-for="Address" class="form-control"/>
+        <span asp-validation-for="Address" class="text-danger" ></span>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="Phone" class="control-label" >Phone Number</label>
+        <input asp-for="Phone" class="form-control"/>
+        <span asp-validation-for="Phone" class="text-danger"></span>
+    </div>
+    <div class="form-group"> 
+        @foreach( var item in Model.bookingCartItems)
+        {
+            <div>
+                <img src=@item.RoomCategory.ImageUrl />
+                <p> @item.RoomCategory.CategoryName </p>
+            </div> 
+        }
+    </div>
+
+    <div class="form-group">
+        <p>@Model.OrderTotal</p>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="check_in" class="control-label" ></label> 
+        <input asp-for="check_in" class="form-control" /> 
+    </div>
+
+    <div class="form-group">
+        <label asp-for="check_out" class="control-label"></label>
+        <input asp-for="check_out" class="form-control" />
+    </div>
+
+    <div>
+        <input type="submit" value="Proceed" />
+        <div asp-validation-summary="All" class="text-danger"></div>
+    </div>
+</form>
