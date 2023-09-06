@@ -6,11 +6,12 @@ namespace ParkView.Models
     {
         public int BookingCartItemId { get; set; }
 
-        [ForeignKey("Room")]
-        public string RoomId { get; set; }
-
-        public Room Room { get; set; }
-
         public string BookingCartId { get; set; }
+
+        [ForeignKey("RoomCategory")]
+        public int RoomCategoryId { get; set; }
+        public RoomCategory RoomCategory { get; set; }
+
+        public int quantity { get; set; }
     }
 }
