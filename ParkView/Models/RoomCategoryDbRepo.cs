@@ -1,4 +1,6 @@
-﻿namespace ParkView.Models
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace ParkView.Models
 {
     public class RoomCategoryDbRepo : IRoomCategory
     {
@@ -15,7 +17,7 @@
 
         public RoomCategory GetCategorybyId(int id)
         {
-            return _context.roomCategories.FirstOrDefault(x => x.RoomCategoryId == id);
+            return _context.roomCategories.FirstOrDefault( x => x.RoomCategoryId == id );
         }
     }
 }

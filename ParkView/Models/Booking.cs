@@ -6,7 +6,6 @@ namespace ParkView.Models
     public class Booking
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int BookingId { get; set; }
 
         public string UserEmail { get; set; }
