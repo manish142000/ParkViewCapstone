@@ -12,8 +12,8 @@ using ParkView.Models;
 namespace ParkView.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    [Migration("20230906113041_migration2")]
-    partial class migration2
+    [Migration("20230906195131_migration1")]
+    partial class migration1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -356,18 +356,6 @@ namespace ParkView.Migrations
                             CouponId = 1,
                             CouponName = "DEALSFORU",
                             DiscountAmount = 10
-                        },
-                        new
-                        {
-                            CouponId = 2,
-                            CouponName = "PROMOPLUS",
-                            DiscountAmount = 20
-                        },
-                        new
-                        {
-                            CouponId = 3,
-                            CouponName = "BARGAINBLISS",
-                            DiscountAmount = 30
                         });
                 });
 
@@ -2917,16 +2905,6 @@ namespace ParkView.Migrations
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"), 1L, 1);
 
                     b.HasDiscriminator().HasValue("User");
                 });

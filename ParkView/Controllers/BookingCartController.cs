@@ -67,7 +67,7 @@ namespace ParkView.Controllers
 
         public RedirectToActionResult AddToBookingCart(int RoomCategoryId)
         {
-           
+            Console.WriteLine("Its Comming Here");
             RoomCategory category = _categories.GetCategorybyId(RoomCategoryId);
 
             _bookingCart.AddToCart(category);

@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ParkView.Models;
 
 namespace ParkView.Controllers
 {
+    [Authorize]
     public class BookingOrderController : Controller
     {
         private readonly BookingCart _bookingcart;
@@ -15,7 +17,8 @@ namespace ParkView.Controllers
         }
         public IActionResult Index()
         {
-             List<BookingCartItem> bookingCartItems = _bookingcart.GetBookingCartItems();
+            Console.WriteLine("Coming Here");
+            List<BookingCartItem> bookingCartItems = _bookingcart.GetBookingCartItems();
 
              DiscountCoupon coupon = _hotelDbContext.discountCoupons.ToList()[0];
 
@@ -31,9 +34,9 @@ namespace ParkView.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index( CheckOut form ) {
+        public RedirectToActionResult Index( CheckOut form ) {
 
-            return View();
+            return RedirectToAction("InitiatePayment", "Payment");
         }
     }
 }

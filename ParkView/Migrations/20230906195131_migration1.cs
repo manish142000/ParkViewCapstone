@@ -29,10 +29,8 @@ namespace ParkView.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -302,12 +300,7 @@ namespace ParkView.Migrations
             migrationBuilder.InsertData(
                 table: "discountCoupons",
                 columns: new[] { "CouponId", "CouponName", "DiscountAmount" },
-                values: new object[,]
-                {
-                    { 1, "Summer Discount", 10 },
-                    { 2, "Monsoon Discount", 20 },
-                    { 3, "Winter Discount", 30 }
-                });
+                values: new object[] { 1, "DEALSFORU", 10 });
 
             migrationBuilder.InsertData(
                 table: "hotels",

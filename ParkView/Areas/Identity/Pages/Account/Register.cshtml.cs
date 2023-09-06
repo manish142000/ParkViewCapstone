@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using ParkView.Models;
 
 namespace ParkView.Areas.Identity.Pages.Account
 {
@@ -104,6 +105,8 @@ namespace ParkView.Areas.Identity.Pages.Account
             [Display(Name = "Last Name")]
 
             public string LastName { get; set; }
+
+            public string PhoneNumber { get; set; }
         }
 
 
@@ -123,6 +126,12 @@ namespace ParkView.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                
+
+                user.PhoneNumber = Input.PhoneNumber;
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
@@ -161,11 +170,11 @@ namespace ParkView.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private IdentityUser CreateUser()
+        private User CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<IdentityUser>();
+                return Activator.CreateInstance<User>();
             }
             catch
             {
