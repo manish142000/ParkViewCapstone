@@ -26,28 +26,31 @@ namespace ParkView.Controllers
             var claimIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            var user = _hotelDbContext.Users.FirstOrDefault(x => x.Id == userId);
+            User user = _hotelDbContext.Users.FirstOrDefault(x => x.Id == userId) as User;
 
             IEnumerable<Booking> bookings = _hotelDbContext.bookings.Where(x => x.UserEmail == user.Email);
 
-            //for( var item in bookings)
-            //{
-                
-            //}
+            TemporaryData data = _hotelDbContext.temporaryData.ToList().Last();
+
 
             double total = _bookingcart.ApplyDiscount(coupon);
 
             CheckOut form = new CheckOut
              {
+                Email = user.Email,
+                FullName = user.FirstName + " " + user.LastName,
                 bookingCartItems = bookingCartItems,
-                OrderTotal = total
+                OrderTotal = total,
+                Phone = user.PhoneNumber,
+                check_in = data.checkin,
+                check_out = data.checkout
              };
 
             return View(form);
         }
 
         [HttpPost]
-        public RedirectToActionResult Index( CheckOut form ) {
+        public RedirectToActionResult Index(CheckOut form) {
 
             var claimIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -64,11 +67,29 @@ namespace ParkView.Controllers
                 TotalCost = form.OrderTotal,
                 Status = false
             };
-
             _hotelDbContext.bookings.Add(item);
             _hotelDbContext.SaveChanges();
-            
+
+            //List of rooms with a particular booking Cart Id
+            List<Room> rooms = _bookingcart.GetRoomsByCartItems();
+
+            foreach (var room in rooms)
+            {
+                BookingRoom bookingRoom = new BookingRoom
+                {
+                    RoomId = room.RoomId,
+                    BookingId = _hotelDbContext.bookings.FirstOrDefault(x => x.CheckInDate == form.check_in && x.CheckOutDate == form.check_out).BookingId
+                };
+                Console.WriteLine("Here is the booking id");
+                Console.WriteLine(item.BookingId);
+                Console.WriteLine(bookingRoom.BookingId);
+                _hotelDbContext.Add(bookingRoom);
+            };
+            _hotelDbContext.SaveChanges();
             return RedirectToAction("InitiatePayment", "Payment");
         }
-    }
+            
+            
+        }
+    
 }

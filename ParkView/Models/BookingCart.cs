@@ -129,5 +129,46 @@ namespace ParkView.Models
             _hotelDbContext.SaveChanges();
         }
 
+        public List<Room> GetRoomsByCartItems()
+        {
+            List<BookingCartItem> list = _hotelDbContext.bookingCartItems.Where(
+                x => x.BookingCartId == BookingCartId
+                ).Include(x => x.RoomCategory).ToList();
+
+            List<Room> final = new List<Room> ();
+
+            foreach( var item in list)
+            {
+                int qty = item.quantity;
+                RoomCategory category = item.RoomCategory;
+
+                DateTime Currentcheckin = item.CheckInDate;
+                DateTime Currentcheckout = item.CheckOutDate;
+
+                //Allrooms of a specific category
+                List<Room> rooms = _hotelDbContext.rooms.Where(x => x.RoomCategoryId == category.RoomCategoryId).ToList();
+
+                List<BookingRoom> bookingrooms = _hotelDbContext.bookingRooms.Include(c => c.Booking).Include(c => c.Room).ToList();
+
+                bookingrooms = bookingrooms.Where(x => x.Room.RoomCategoryId == category.RoomCategoryId).ToList();
+
+                foreach( var bookingroom in bookingrooms)
+                {
+
+                    DateTime bci = bookingroom.Booking.CheckInDate;
+                    DateTime bco = bookingroom.Booking.CheckOutDate;
+
+                    if( (bookingroom.Booking.Status) && (( bci >= Currentcheckin && bci <= Currentcheckout ) || ( bco >= Currentcheckin && bco <= Currentcheckout )))
+                    {
+                        Room temp = bookingroom.Room;
+                        rooms.Remove(temp);
+                    }
+                }
+
+                final.AddRange( rooms.Take(qty) );
+            }
+
+            return final;
+        }
     }
 }

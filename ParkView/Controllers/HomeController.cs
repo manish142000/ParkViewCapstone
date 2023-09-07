@@ -78,7 +78,7 @@ namespace ParkView.Controllers
 
                     if( booking != null)
                     {
-                        if ((booking.CheckOutDate >= form.check_in &&  booking.CheckInDate <= form.check_in ) || (booking.CheckInDate <= form.check_out && booking.CheckOutDate >= form.check_out))
+                        if ( (booking.Status) && (booking.CheckOutDate >= form.check_in &&  booking.CheckInDate <= form.check_in ) || (booking.CheckInDate <= form.check_out && booking.CheckOutDate >= form.check_out))
                         {
                             rooms.Remove(room);
                         }
