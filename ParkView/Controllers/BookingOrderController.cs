@@ -26,21 +26,24 @@ namespace ParkView.Controllers
             var claimIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            var user = _hotelDbContext.Users.FirstOrDefault(x => x.Id == userId);
+            User user = _hotelDbContext.Users.FirstOrDefault(x => x.Id == userId) as User;
 
             IEnumerable<Booking> bookings = _hotelDbContext.bookings.Where(x => x.UserEmail == user.Email);
 
-            //for( var item in bookings)
-            //{
-                
-            //}
+            TemporaryData data = _hotelDbContext.temporaryData.ToList().Last();
+
 
             double total = _bookingcart.ApplyDiscount(coupon);
 
             CheckOut form = new CheckOut
              {
+                Email = user.Email,
+                FullName = user.FirstName + " " + user.LastName,
                 bookingCartItems = bookingCartItems,
-                OrderTotal = total
+                OrderTotal = total,
+                Phone = user.PhoneNumber,
+                check_in = data.checkin,
+                check_out = data.checkout
              };
 
             return View(form);
