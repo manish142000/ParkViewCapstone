@@ -50,7 +50,7 @@ namespace ParkView.Controllers
             };
 
             IEnumerable<Hotel> Hotels = _hotel.GetHotelsByLocation(form.destination);
-
+            string hotelName = Hotels.ToArray().First().Name;
 
             List<Room> rooms = new List<Room>();
             foreach( var hotel in Hotels )
@@ -104,7 +104,8 @@ namespace ParkView.Controllers
                 rooms = rooms,
                 roomTypeNames = roomTypeNames,
                 imageUrls = imgUrls,
-                availableRooms = avlRooms
+                availableRooms = avlRooms,
+                searchHotelName = hotelName
             };
 
             return View(obj);

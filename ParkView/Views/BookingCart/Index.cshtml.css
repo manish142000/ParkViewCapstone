@@ -1,10 +1,21 @@
-﻿h1 {
-    text-align: center;
-    margin: 15px 0px;
+﻿#cart-page {
+    background-color: rgb(240, 240, 240);
 }
 
+h1 {
+    text-align: center;
+    padding: 15px 0px;
+    background-color: rgb(240, 240, 240);
+}
+h2, h4, h5 {
+    margin: 5px 10px;
+}
 h3, #checkout-btn, #coupon {
     margin: 5px 20px;
+}
+
+#checkout-btn {
+    padding: 10px 0px;
 }
 
 #cart-items {
@@ -18,5 +29,37 @@ h3, #checkout-btn, #coupon {
 
 #cart-heading {
     font-weight: 500;
-    font-size: 1.75rem;
+    font-size: 1.5rem;
+}
+
+#cart-image {
+    border-radius: 4px;
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    object-position: 50% 50%;
+}
+
+.card-title {
+    display:flex; 
+    flex-direction:column; 
+    align-content:center;
+    justify-content:center;
+}
+
+.card {
+    width: 35rem;
+    margin: 5px 0px;
+}
+
+#room-type {
+    width: 150px;
+}
+
+#bottom-items {
+    margin-left: 115px;
+}   
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24
 }

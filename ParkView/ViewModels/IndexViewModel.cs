@@ -31,5 +31,7 @@ namespace ParkView.ViewModels
         public int[] availableRooms { get; set; }
         public IEnumerable<Hotel> hotels { get; set;}
 
+        public string searchHotelName { get; set; }
+
     }
 }
