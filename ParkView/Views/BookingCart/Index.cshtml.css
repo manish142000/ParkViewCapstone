@@ -1,0 +1,22 @@
+﻿h1 {
+    text-align: center;
+    margin: 15px 0px;
+}
+
+h3, #checkout-btn, #coupon {
+    margin: 5px 20px;
+}
+
+#cart-items {
+    border: ridge 2px;
+    border-radius: 4px;
+    margin: 10px 10px;
+    padding: 5px 5px;
+    font-weight: 500;
+    box-shadow: 0px 0px 3px 3px rgba(0,0,0,.4);
+}
+
+#cart-heading {
+    font-weight: 500;
+    font-size: 1.75rem;
+}

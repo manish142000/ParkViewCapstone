@@ -5,8 +5,36 @@
 }
 
 @model ParkView.ViewModels.BookingCartViewModel;
-
-@foreach( var item in Model.BookingCart.BookingCartItems)
+<h1>Booking Cart</h1>
+@if (Model.BookingCart.BookingCartItems.Count > 0)
 {
-    <p>@item.RoomCategory.CategoryName</p>
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-3" id="cart-heading">
+                Room Type
+            </div>
+            <div class="col-2" id="cart-heading">
+                Number of Rooms
+            </div>
+        </div>
+        @foreach( var item in Model.BookingCart.BookingCartItems)
+        {
+            <div class="row" id="cart-items">
+                <div class="col-3">
+                    @item.RoomCategory.CategoryName
+                </div>
+                <div class="col-2">
+                    @item.quantity
+                </div>
+            </div>
+        }
+    </div>
+    <h5 id="coupon">Discount Coupons : <vc:coupon-menu></vc:coupon-menu></h5>
+    
+    <h3>Cart Total: ₹@Model.total</h3>
+    <button class="btn btn-primary" id="checkout-btn">Checkout</button>
+}
+else
+{
+    <h3>You have not added any rooms to the cart yet...</h3>
 }

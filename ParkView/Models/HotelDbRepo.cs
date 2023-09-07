@@ -11,7 +11,7 @@
 
         public IEnumerable<Hotel> GetAllHotels()
         {
-            return _context.hotels.ToList();
+            return _context.hotels.AsEnumerable();
         }
 
         public Hotel GetHotelById(int id)

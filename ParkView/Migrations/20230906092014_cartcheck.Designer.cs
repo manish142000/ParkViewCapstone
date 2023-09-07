@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ParkView.Models;
 
@@ -11,9 +12,10 @@ using ParkView.Models;
 namespace ParkView.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    partial class HotelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230906092014_cartcheck")]
+    partial class cartcheck
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -352,19 +354,19 @@ namespace ParkView.Migrations
                         new
                         {
                             CouponId = 1,
-                            CouponName = "DEALSFORU",
+                            CouponName = "Summer Discount",
                             DiscountAmount = 10
                         },
                         new
                         {
                             CouponId = 2,
-                            CouponName = "PROMOPLUS",
+                            CouponName = "Monsoon Discount",
                             DiscountAmount = 20
                         },
                         new
                         {
                             CouponId = 3,
-                            CouponName = "BARGAINBLISS",
+                            CouponName = "Winter Discount",
                             DiscountAmount = 30
                         });
                 });

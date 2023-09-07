@@ -29,6 +29,7 @@ namespace ParkView.ViewModels
         public string[] roomTypeNames { get; set; }
         public string[] imageUrls { get; set; }
         public int[] availableRooms { get; set; }
+        public IEnumerable<Hotel> hotels { get; set;}
 
     }
 }

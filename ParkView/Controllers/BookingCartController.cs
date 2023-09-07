@@ -29,7 +29,7 @@ namespace ParkView.Controllers
             if (discountCoupon == null)
             {
                 BookingCartviewModel = new BookingCartViewModel
-                {
+                { 
                     BookingCart = _bookingCart,
                     total = _bookingCart.GetBookingCartTotal()
                 };

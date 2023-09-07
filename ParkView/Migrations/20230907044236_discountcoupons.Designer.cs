@@ -12,8 +12,8 @@ using ParkView.Models;
 namespace ParkView.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    [Migration("20230906090309_migration1")]
-    partial class migration1
+    [Migration("20230907044236_discountcoupons")]
+    partial class discountcoupons
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -354,19 +354,19 @@ namespace ParkView.Migrations
                         new
                         {
                             CouponId = 1,
-                            CouponName = "Summer Discount",
+                            CouponName = "DEALSFORU",
                             DiscountAmount = 10
                         },
                         new
                         {
                             CouponId = 2,
-                            CouponName = "Monsoon Discount",
+                            CouponName = "PROMOPLUS",
                             DiscountAmount = 20
                         },
                         new
                         {
                             CouponId = 3,
-                            CouponName = "Winter Discount",
+                            CouponName = "BARGAINBLISS",
                             DiscountAmount = 30
                         });
                 });

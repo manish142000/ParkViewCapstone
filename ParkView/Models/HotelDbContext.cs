@@ -37,7 +37,7 @@ namespace ParkView.Models
                     new DiscountCoupon
                     {
                         CouponId = 1,
-                        CouponName = "Summer Discount",
+                        CouponName = "DEALSFORU",
                         DiscountAmount = 10
                     }
                 );
@@ -46,7 +46,7 @@ namespace ParkView.Models
                     new DiscountCoupon
                     {
                         CouponId = 2,
-                        CouponName = "Monsoon Discount",
+                        CouponName = "PROMOPLUS",
                         DiscountAmount = 20
                     }
                 );
@@ -55,7 +55,7 @@ namespace ParkView.Models
                     new DiscountCoupon
                     {
                         CouponId = 3,
-                        CouponName = "Winter Discount",
+                        CouponName = "BARGAINBLISS",
                         DiscountAmount = 30
                     }
                 );
