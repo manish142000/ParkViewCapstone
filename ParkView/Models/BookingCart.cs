@@ -146,7 +146,7 @@ namespace ParkView.Models
                 DateTime Currentcheckout = item.CheckOutDate;
 
                 //Allrooms of a specific category
-                List<Room> rooms = _hotelDbContext.rooms.Where(x => x.RoomCategoryId == category.RoomCategoryId).ToList();
+                List<Room> rooms = _hotelDbContext.rooms.Where(x => x.RoomCategoryId == category.RoomCategoryId).Include( c => c.RoomCategory).ToList();
 
                 List<BookingRoom> bookingrooms = _hotelDbContext.bookingRooms.Include(c => c.Booking).Include(c => c.Room).ToList();
 
@@ -161,6 +161,9 @@ namespace ParkView.Models
                     if( (bookingroom.Booking.Status) && (( bci >= Currentcheckin && bci <= Currentcheckout ) || ( bco >= Currentcheckin && bco <= Currentcheckout )))
                     {
                         Room temp = bookingroom.Room;
+
+                        Console.WriteLine("Magic happening here");
+                        Console.WriteLine(temp.RoomCategory.CategoryName);
                         rooms.Remove(temp);
                     }
                 }
