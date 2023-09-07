@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ParkView.Models;
+using System.Security.Claims;
 
 namespace ParkView.Controllers
 {
@@ -17,12 +18,24 @@ namespace ParkView.Controllers
         }
         public IActionResult Index()
         {
-            Console.WriteLine("Coming Here");
             List<BookingCartItem> bookingCartItems = _bookingcart.GetBookingCartItems();
 
-             DiscountCoupon coupon = _hotelDbContext.discountCoupons.ToList()[0];
+            DiscountCoupon coupon = _hotelDbContext.discountCoupons.ToList()[0];
 
-             double total = _bookingcart.ApplyDiscount(coupon);
+            // remove earlier bookings with status false 
+            var claimIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var user = _hotelDbContext.Users.FirstOrDefault(x => x.Id == userId);
+
+            IEnumerable<Booking> bookings = _hotelDbContext.bookings.Where(x => x.UserEmail == user.Email);
+
+            //for( var item in bookings)
+            //{
+                
+            //}
+
+            double total = _bookingcart.ApplyDiscount(coupon);
 
             CheckOut form = new CheckOut
              {
@@ -36,6 +49,25 @@ namespace ParkView.Controllers
         [HttpPost]
         public RedirectToActionResult Index( CheckOut form ) {
 
+            var claimIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var user = _hotelDbContext.Users.FirstOrDefault(x => x.Id == userId);
+
+            //booking with status false; 
+
+            Booking item = new Booking
+            {
+                UserEmail = user.Email,
+                CheckInDate = form.check_in,
+                CheckOutDate = form.check_out,
+                TotalCost = form.OrderTotal,
+                Status = false
+            };
+
+            _hotelDbContext.bookings.Add(item);
+            _hotelDbContext.SaveChanges();
+            
             return RedirectToAction("InitiatePayment", "Payment");
         }
     }

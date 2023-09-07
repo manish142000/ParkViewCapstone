@@ -12,8 +12,8 @@ using ParkView.Models;
 namespace ParkView.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    [Migration("20230906195131_migration1")]
-    partial class migration1
+    [Migration("20230907070110_migration3")]
+    partial class migration3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -249,6 +249,9 @@ namespace ParkView.Migrations
                     b.Property<int>("CouponId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
                     b.Property<double>("TotalCost")
                         .HasColumnType("float");
 
@@ -269,6 +272,7 @@ namespace ParkView.Migrations
                             CheckInDate = new DateTime(2023, 9, 15, 13, 45, 30, 0, DateTimeKind.Unspecified),
                             CheckOutDate = new DateTime(2023, 9, 23, 13, 45, 30, 0, DateTimeKind.Unspecified),
                             CouponId = 1,
+                            Status = true,
                             TotalCost = 0.0,
                             UserEmail = "testuser123@gmail.com"
                         });
@@ -283,6 +287,20 @@ namespace ParkView.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingCartItemId"), 1L, 1);
 
                     b.Property<string>("BookingCartId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CheckInDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CheckOutDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("HotelName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -417,6 +435,10 @@ namespace ParkView.Migrations
                     b.Property<string>("RoomId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("HotelId")
                         .HasColumnType("int");
 
@@ -436,6 +458,8 @@ namespace ParkView.Migrations
                     b.HasIndex("RoomCategoryId");
 
                     b.ToTable("rooms");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Room");
 
                     b.HasData(
                         new
@@ -2892,6 +2916,41 @@ namespace ParkView.Migrations
                             DailyRate = 8000,
                             ImageUrl = "~/images/deluxe.jpeg"
                         });
+                });
+
+            modelBuilder.Entity("ParkView.Models.TemporaryData", b =>
+                {
+                    b.Property<int>("TemporaryDataId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TemporaryDataId"), 1L, 1);
+
+                    b.Property<DateTime>("checkin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("checkout")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("hotel")
+                        .HasColumnType("int");
+
+                    b.HasKey("TemporaryDataId");
+
+                    b.ToTable("temporaryData");
+                });
+
+            modelBuilder.Entity("ParkView.Models.CurrentRoomsSelected", b =>
+                {
+                    b.HasBaseType("ParkView.Models.Room");
+
+                    b.Property<DateTime>("CheckInDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CheckOutDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasDiscriminator().HasValue("CurrentRoomsSelected");
                 });
 
             modelBuilder.Entity("ParkView.Models.User", b =>

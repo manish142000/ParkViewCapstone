@@ -19,5 +19,7 @@ namespace ParkView.Models
         public DiscountCoupon DiscountCoupon { get; set; }
 
         public double TotalCost { get; set; } 
+
+        public Boolean Status { get; set; }
     }
 }
