@@ -38,27 +38,27 @@ namespace ParkView.Models
                     {
                         CouponId = 1,
                         CouponName = "DEALSFORU",
-                        DiscountAmount = 10 
+                        DiscountAmount = 10
                     }
                 );
 
-            //modelBuilder.Entity<DiscountCoupon>().HasData(
-            //        new DiscountCoupon
-            //        {
-            //            CouponId = 2,
-            //            CouponName = "PROMOPLUS",
-            //            DiscountAmount = 20
-            //        }
-            //    );
+            modelBuilder.Entity<DiscountCoupon>().HasData(
+                    new DiscountCoupon
+                    {
+                        CouponId = 2,
+                        CouponName = "PROMOPLUS",
+                        DiscountAmount = 20
+                    }
+                );
 
-            //modelBuilder.Entity<DiscountCoupon>().HasData(
-            //        new DiscountCoupon
-            //        {
-            //            CouponId = 3,
-            //            CouponName = "BARGAINBLISS",
-            //            DiscountAmount = 30
-            //        }
-            //    );
+            modelBuilder.Entity<DiscountCoupon>().HasData(
+                    new DiscountCoupon
+                    {
+                        CouponId = 3,
+                        CouponName = "BARGAINBLISS",
+                        DiscountAmount = 30
+                    }
+                );
 
             //seeding the Booking table
 

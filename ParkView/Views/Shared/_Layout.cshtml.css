@@ -57,3 +57,9 @@ button.accept-policy {
 .nav-item {
     font-size: 1.5rem;
 }
+
+#main-content {
+    font-family: 'Roboto Slab', serif;
+    font-weight: 300;
+    padding-top: 58px;
+}

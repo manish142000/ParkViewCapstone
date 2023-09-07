@@ -31,10 +31,10 @@ namespace ParkView.Controllers
 
         public IActionResult Index()
         {
-
             IndexViewModel obj = new IndexViewModel
             {
-                rooms = new List<Room>()
+                rooms = new List<Room>(),
+                hotels = _hotel.GetAllHotels()
             };
             
             return View(obj);

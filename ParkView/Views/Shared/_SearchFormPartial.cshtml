@@ -5,10 +5,23 @@
 
 
 @model ParkView.ViewModels.IndexViewModel;
-
+@{
+    List<SelectListItem> hLocations = new List<SelectListItem>();
+    //hLocations.Add(new SelectListItem { Value = "select", Text = "Choose a location", Disabled = true, Selected = true });
+    //foreach(var hotel in Model.hotels)
+    //{
+    //    hLocations.Add(new SelectListItem { Value = hotel.Location, Text = hotel.Location });
+    //}
+    hLocations.Add(new SelectListItem { Value = "select", Text = "Choose a location", Disabled = true, Selected = true });    
+    hLocations.Add(new SelectListItem { Value = "Ooty", Text = "Ooty" });
+    hLocations.Add(new SelectListItem { Value = "Manali", Text = "Manali" });
+    hLocations.Add(new SelectListItem { Value = "Darjeeling", Text = "Darjeeling" });
+    hLocations.Add(new SelectListItem { Value = "Shimla", Text = "Shimla" });
+    hLocations.Add(new SelectListItem { Value = "Coorg", Text = "Coorg" });
+}
 <style>
     p {
-        font-weight: 600;
+        font-weight: 500;
     }
 </style>
 <form class="form" method="Post" asp-controller="Home" asp-action="Index">
@@ -16,7 +29,7 @@
         <div class="row">
             <div class="col">
                 <p>Destination</p>
-                <input asp-for="destination" class="form-control" type="text" placeholder="Destination"/>
+                <select asp-for="destination" asp-items="@hLocations" class="form-control" required></select>
             </div>
             <div class="col">
                 <p>Check-in</p>
