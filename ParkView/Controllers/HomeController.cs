@@ -5,6 +5,7 @@ using MvcContrib.Filters;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using ParkView.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace ParkView.Controllers
 {
@@ -74,21 +75,24 @@ namespace ParkView.Controllers
 
                     Booking booking = _context.bookings.FirstOrDefault(x => x.BookingId == bookedroom.BookingId);
 
-                    Room room = _context.rooms.FirstOrDefault(x => x.RoomId == bookedroom.RoomId);
+                    Room room = _context.rooms.Include(x => x.RoomCategory).FirstOrDefault(x => x.RoomId == bookedroom.RoomId);
 
                     if( booking != null)
                     {
                         if ( (booking.Status) && (booking.CheckOutDate >= form.check_in &&  booking.CheckInDate <= form.check_in ) || (booking.CheckInDate <= form.check_out && booking.CheckOutDate >= form.check_out))
                         {
                             rooms.Remove(room);
+                            Console.WriteLine("Here");
+                            Console.WriteLine(room.RoomCategory.CategoryName);
+
                         }
                     }
                 }
             }
             List<RoomCategory> roomTypes = _roomCategory.GetAllCategories().ToList();
-            string[] imgUrls = new string[roomTypes.Count];
+            string[] imgUrls = new string[roomTypes.Count()];
             string[] roomTypeNames = new string[roomTypes.Count()];
-            for (int i = 0; i < roomTypes.Count; i++)
+            for (int i = 0; i < roomTypes.Count(); i++)
             {
                 roomTypeNames[i] = roomTypes[i].CategoryName;
                 imgUrls[i] = roomTypes[i].ImageUrl;
@@ -99,6 +103,10 @@ namespace ParkView.Controllers
             {
                 avlRooms[avlRoom.RoomCategoryId - 1]++;
             }
+
+            Console.WriteLine("available rooms for executive");
+            Console.WriteLine(avlRooms[1]);
+
             IndexViewModel obj = new IndexViewModel
             {
                 rooms = rooms,
