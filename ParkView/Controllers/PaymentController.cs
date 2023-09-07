@@ -112,7 +112,7 @@ namespace ParkView.Controllers
             obj.OrderId = razorpay_order_id;
             obj.TransactionId = razorpay_payment_id;
 
-            return View("PaymentSucces", obj);
+            return View("PaymentSuccess", obj);
         }
     }
 }

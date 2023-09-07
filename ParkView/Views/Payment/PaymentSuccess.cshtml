@@ -1,0 +1,28 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model ParkView.Models.UserModel
+<style>
+    body {
+        background-color: #f2ebd8;
+    }
+
+    h1 {
+        text-align: center;
+        margin: 20px 0px;
+    }
+
+    h4, h5 {
+        margin: 10px 50px;
+        font-family: 'Segoe UI';
+    }
+
+</style>
+<h1>Payment Completed Successfully</h1>
+<h4>Payment Details</h4>
+<h5>Order ID : @Model.OrderId</h5>
+<h5> Transaction ID : @Model.TransactionId </h5>
+<a asp-controller="Home" asp-action="Index" class="btn btn-primary"></a>
