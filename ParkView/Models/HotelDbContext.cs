@@ -27,6 +27,10 @@ namespace ParkView.Models
 
         public DbSet<BookingCartItem> bookingCartItems { get; set; }
 
+        public DbSet<CurrentRoomsSelected> currentRooms { get; set; }
+
+        public DbSet<TemporaryData> temporaryData { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -69,7 +73,8 @@ namespace ParkView.Models
                     UserEmail = "testuser123@gmail.com",
                     CheckInDate = DateTime.Parse("2023-09-15T13:45:30"),
                     CheckOutDate = DateTime.Parse("2023-09-23T13:45:30"),
-                    CouponId = 1
+                    CouponId = 1,
+                    Status = true
                 }
                 );
 

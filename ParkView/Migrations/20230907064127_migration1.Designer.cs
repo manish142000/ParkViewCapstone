@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ParkView.Models;
 
@@ -11,9 +12,10 @@ using ParkView.Models;
 namespace ParkView.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    partial class HotelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230907064127_migration1")]
+    partial class migration1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -295,10 +297,6 @@ namespace ParkView.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("HotelName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -2914,28 +2912,6 @@ namespace ParkView.Migrations
                             DailyRate = 8000,
                             ImageUrl = "~/images/deluxe.jpeg"
                         });
-                });
-
-            modelBuilder.Entity("ParkView.Models.TemporaryData", b =>
-                {
-                    b.Property<int>("TemporaryDataId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TemporaryDataId"), 1L, 1);
-
-                    b.Property<DateTime>("checkin")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("checkout")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("hotel")
-                        .HasColumnType("int");
-
-                    b.HasKey("TemporaryDataId");
-
-                    b.ToTable("temporaryData");
                 });
 
             modelBuilder.Entity("ParkView.Models.CurrentRoomsSelected", b =>

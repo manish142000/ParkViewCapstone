@@ -43,14 +43,25 @@ namespace ParkView.Controllers
         [HttpPost]
         public IActionResult Index(IndexViewModel form)
         {
+            TemporaryData data = new TemporaryData
+            {
+                checkin = form.check_in,
+                checkout = form.check_out
+            };
+
             IEnumerable<Hotel> Hotels = _hotel.GetHotelsByLocation(form.destination);
 
 
             List<Room> rooms = new List<Room>();
             foreach( var hotel in Hotels )
             {
+                data.hotel = hotel.HotelId;
                 rooms.AddRange( _room.GetRoomsByHotelId(hotel.HotelId) );
             }
+
+            _context.temporaryData.Add(data);
+
+            _context.SaveChanges();
 
             List<BookingRoom> bookedRooms = _bookingroom.BookedRooms();
 

@@ -73,6 +73,21 @@ namespace ParkView.Controllers
 
             Utils.verifyPaymentSignature(attributes);
 
+            var claimIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var user = _hotelDbContext.Users.FirstOrDefault(x => x.Id == userId);
+
+            // logic to save in the booking table
+            // 
+            Booking item = _hotelDbContext.bookings.FirstOrDefault( x => x.UserEmail == user.Email );
+
+            item.Status = true;
+
+            _hotelDbContext.SaveChanges();
+
+            // sending Order Id and transaction id to frontend
+
             UserModel obj = new UserModel();
 
             obj.OrderId = razorpay_order_id;

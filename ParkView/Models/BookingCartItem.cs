@@ -13,5 +13,14 @@ namespace ParkView.Models
         public RoomCategory RoomCategory { get; set; }
 
         public int quantity { get; set; }
+
+        public DateTime CheckInDate { get; set; }
+
+        public DateTime CheckOutDate { get; set; }
+
+        public string HotelName { get; set; }
+
+        public string Location { get; set; }
+
     }
 }

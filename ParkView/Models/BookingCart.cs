@@ -1,4 +1,5 @@
 ﻿using Humanizer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography.X509Certificates;
 
@@ -14,6 +15,7 @@ namespace ParkView.Models
         public double total { get; set; }
 
         private readonly HotelDbContext _hotelDbContext;
+
 
         public BookingCart( HotelDbContext hotelDbContext)
         {
@@ -43,6 +45,9 @@ namespace ParkView.Models
             var BookingCartItem = _hotelDbContext.bookingCartItems.SingleOrDefault(
                 x => x.BookingCartId == BookingCartId && x.RoomCategoryId == roomCategory.RoomCategoryId  );
 
+            TemporaryData data = _hotelDbContext.temporaryData.ToArray().Last();
+
+            Hotel hotel = _hotelDbContext.hotels.FirstOrDefault(x => x.HotelId == data.hotel);
 
             if( BookingCartItem == null)
             {
@@ -50,7 +55,11 @@ namespace ParkView.Models
                 {
                     RoomCategory = roomCategory,
                     BookingCartId = BookingCartId,
-                    quantity = 1
+                    quantity = 1,
+                    CheckInDate = data.checkin,
+                    CheckOutDate = data.checkout,
+                    HotelName = hotel.Name,
+                    Location = hotel.Location
                 };
 
                 _hotelDbContext.bookingCartItems.Add(BookingCartItem);
@@ -72,9 +81,13 @@ namespace ParkView.Models
 
         public double GetBookingCartTotal()
         {
-            return _hotelDbContext.bookingCartItems.Where(
+            double amount = _hotelDbContext.bookingCartItems.Where(
                 x => x.BookingCartId == BookingCartId
                 ).Select(c => c.RoomCategory.DailyRate * c.quantity).Sum();
+
+            amount = amount + amount * 0.18;
+
+            return amount;
         }
 
         public double ApplyDiscount( DiscountCoupon discountCoupon)
@@ -84,6 +97,9 @@ namespace ParkView.Models
                 ).Select(c => c.RoomCategory.DailyRate * c.quantity).Sum();
 
             double discountAmount = amount * discountCoupon.DiscountAmount * 0.01;
+
+            // GST 18%
+            amount = amount + amount * 0.18; 
 
             amount = amount - discountAmount;
 
@@ -112,5 +128,6 @@ namespace ParkView.Models
 
             _hotelDbContext.SaveChanges();
         }
+
     }
 }
