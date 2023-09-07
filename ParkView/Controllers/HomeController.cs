@@ -71,19 +71,19 @@ namespace ParkView.Controllers
             {
                 foreach (var bookedroom in bookedRooms)
                 {
-
-
                     Booking booking = _context.bookings.FirstOrDefault(x => x.BookingId == bookedroom.BookingId);
 
-                    Room room = _context.rooms.Include(x => x.RoomCategory).FirstOrDefault(x => x.RoomId == bookedroom.RoomId);
+                    Room room = _context.rooms.Include(c => c.RoomCategory).FirstOrDefault(x => x.RoomId == bookedroom.RoomId);
 
                     if( booking != null)
                     {
                         if ( (booking.Status) && (booking.CheckOutDate >= form.check_in &&  booking.CheckInDate <= form.check_in ) || (booking.CheckInDate <= form.check_out && booking.CheckOutDate >= form.check_out))
                         {
-                            rooms.Remove(room);
-                            Console.WriteLine("Here");
-                            Console.WriteLine(room.RoomCategory.CategoryName);
+                            //rooms.Remove(room);
+                            Room temp = rooms.FirstOrDefault(x => x.RoomCategoryId == room.RoomCategory.RoomCategoryId);
+                            rooms.Remove(temp);
+                            Console.WriteLine("Here is the answer");
+                            Console.WriteLine(room.RoomId);
 
                         }
                     }

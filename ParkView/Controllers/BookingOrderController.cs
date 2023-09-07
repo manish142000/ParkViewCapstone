@@ -57,13 +57,15 @@ namespace ParkView.Controllers
 
             var user = _hotelDbContext.Users.FirstOrDefault(x => x.Id == userId);
 
+            var data = _hotelDbContext.temporaryData.ToList().Last();
+
             //booking with status false; 
 
             Booking item = new Booking
             {
                 UserEmail = user.Email,
-                CheckInDate = form.check_in,
-                CheckOutDate = form.check_out,
+                CheckInDate = data.checkin,
+                CheckOutDate = data.checkout,
                 TotalCost = form.OrderTotal,
                 Status = false
             };
@@ -71,21 +73,7 @@ namespace ParkView.Controllers
             _hotelDbContext.SaveChanges();
 
             //List of rooms with a particular booking Cart Id
-            List<Room> rooms = _bookingcart.GetRoomsByCartItems();
-
-            foreach (var room in rooms)
-            {
-                BookingRoom bookingRoom = new BookingRoom
-                {
-                    RoomId = room.RoomId,
-                    BookingId = _hotelDbContext.bookings.FirstOrDefault(x => x.CheckInDate == form.check_in && x.CheckOutDate == form.check_out).BookingId
-                };
-                Console.WriteLine("Here is the booking id");
-                Console.WriteLine(item.BookingId);
-                Console.WriteLine(bookingRoom.BookingId);
-                _hotelDbContext.Add(bookingRoom);
-            };
-            _hotelDbContext.SaveChanges();
+            
             return RedirectToAction("InitiatePayment", "Payment");
         }
             
