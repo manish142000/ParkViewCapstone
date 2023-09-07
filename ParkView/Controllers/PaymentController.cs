@@ -30,8 +30,6 @@ namespace ParkView.Controllers
 
             DiscountCoupon discountCoupon = _hotelDbContext.discountCoupons.FirstOrDefault(x => x.CouponId == 1);
 
-            Console.WriteLine(discountCoupon.CouponId);
-
             Random _random = new Random();
             string TransactionId = _random.Next(0, 10000).ToString();
 

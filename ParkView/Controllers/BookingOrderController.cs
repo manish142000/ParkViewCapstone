@@ -47,7 +47,7 @@ namespace ParkView.Controllers
         }
 
         [HttpPost]
-        public RedirectToActionResult Index( CheckOut form ) {
+        public RedirectToActionResult Index(CheckOut form) {
 
             var claimIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -64,11 +64,29 @@ namespace ParkView.Controllers
                 TotalCost = form.OrderTotal,
                 Status = false
             };
-
             _hotelDbContext.bookings.Add(item);
             _hotelDbContext.SaveChanges();
-            
+
+            //List of rooms with a particular booking Cart Id
+            List<Room> rooms = _bookingcart.GetRoomsByCartItems();
+
+            foreach (var room in rooms)
+            {
+                BookingRoom bookingRoom = new BookingRoom
+                {
+                    RoomId = room.RoomId,
+                    BookingId = _hotelDbContext.bookings.FirstOrDefault(x => x.CheckInDate == form.check_in && x.CheckOutDate == form.check_out).BookingId
+                };
+                Console.WriteLine("Here is the booking id");
+                Console.WriteLine(item.BookingId);
+                Console.WriteLine(bookingRoom.BookingId);
+                _hotelDbContext.Add(bookingRoom);
+            };
+            _hotelDbContext.SaveChanges();
             return RedirectToAction("InitiatePayment", "Payment");
         }
-    }
+            
+            
+        }
+    
 }
