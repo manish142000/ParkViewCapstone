@@ -6,8 +6,18 @@
     #register, #login, #logout, #manage {
         font-size: 15px;
     }
+
+    .nav-item {
+        padding: 10px 5px;
+    }
+
+    .nav-item:hover {
+        background-color: white;
+        transition-duration: 0.2s;
+        padding: 10px 5px;
+    }
 </style>
-<ul class="navbar-nav">
+<ul class="navbar-nav d-flex" style="height: stretch;">
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">

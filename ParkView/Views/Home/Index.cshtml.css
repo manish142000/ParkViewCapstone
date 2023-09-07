@@ -1,0 +1,15 @@
+﻿#back-btn {
+    margin: 15px 10px;
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+    object-position: 50% 50%;
+}
+
+.d-block {
+    height: 700px;
+    object-fit: cover;
+    object-position: 50% 50%;
+   

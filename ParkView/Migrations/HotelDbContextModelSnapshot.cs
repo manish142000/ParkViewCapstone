@@ -2912,7 +2912,7 @@ namespace ParkView.Migrations
                             RoomCategoryId = 4,
                             CategoryName = "Deluxe",
                             DailyRate = 8000,
-                            ImageUrl = "~/images/deluxe.jpeg"
+                            ImageUrl = "~/images/deluxe.jpg"
                         });
                 });
 
