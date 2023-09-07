@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ParkView.Migrations
 {
-    public partial class cartcheck : Migration
+    public partial class migration1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,10 +29,8 @@ namespace ParkView.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -51,6 +49,23 @@ namespace ParkView.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "bookings",
+                columns: table => new
+                {
+                    BookingId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CheckInDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CheckOutDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TotalCost = table.Column<double>(type: "float", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_bookings", x => x.BookingId);
                 });
 
             migrationBuilder.CreateTable(
@@ -94,6 +109,21 @@ namespace ParkView.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_roomCategories", x => x.RoomCategoryId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "temporaryData",
+                columns: table => new
+                {
+                    TemporaryDataId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    checkin = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    checkout = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    hotel = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_temporaryData", x => x.TemporaryDataId);
                 });
 
             migrationBuilder.CreateTable(
@@ -203,29 +233,6 @@ namespace ParkView.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "bookings",
-                columns: table => new
-                {
-                    BookingId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CheckInDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CheckOutDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CouponId = table.Column<int>(type: "int", nullable: false),
-                    TotalCost = table.Column<double>(type: "float", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_bookings", x => x.BookingId);
-                    table.ForeignKey(
-                        name: "FK_bookings_discountCoupons_CouponId",
-                        column: x => x.CouponId,
-                        principalTable: "discountCoupons",
-                        principalColumn: "CouponId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "bookingCartItems",
                 columns: table => new
                 {
@@ -233,7 +240,11 @@ namespace ParkView.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BookingCartId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RoomCategoryId = table.Column<int>(type: "int", nullable: false),
-                    quantity = table.Column<int>(type: "int", nullable: false)
+                    quantity = table.Column<int>(type: "int", nullable: false),
+                    CheckInDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CheckOutDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    HotelName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -300,13 +311,18 @@ namespace ParkView.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "bookings",
+                columns: new[] { "BookingId", "CheckInDate", "CheckOutDate", "Status", "TotalCost", "UserEmail" },
+                values: new object[] { 1, new DateTime(2023, 9, 15, 13, 45, 30, 0, DateTimeKind.Unspecified), new DateTime(2023, 9, 23, 13, 45, 30, 0, DateTimeKind.Unspecified), true, 0.0, "testuser123@gmail.com" });
+
+            migrationBuilder.InsertData(
                 table: "discountCoupons",
                 columns: new[] { "CouponId", "CouponName", "DiscountAmount" },
                 values: new object[,]
                 {
-                    { 1, "Summer Discount", 10 },
-                    { 2, "Monsoon Discount", 20 },
-                    { 3, "Winter Discount", 30 }
+                    { 1, "DEALSFORU", 10 },
+                    { 2, "PROMOPLUS", 20 },
+                    { 3, "BARGAINBLISS", 30 }
                 });
 
             migrationBuilder.InsertData(
@@ -331,11 +347,6 @@ namespace ParkView.Migrations
                     { 3, "Super Deluxe", 14000, "~/images/super-deluxe.jpg" },
                     { 4, "Deluxe", 8000, "~/images/deluxe.jpeg" }
                 });
-
-            migrationBuilder.InsertData(
-                table: "bookings",
-                columns: new[] { "BookingId", "CheckInDate", "CheckOutDate", "CouponId", "TotalCost", "UserEmail" },
-                values: new object[] { 1, new DateTime(2023, 9, 15, 13, 45, 30, 0, DateTimeKind.Unspecified), new DateTime(2023, 9, 23, 13, 45, 30, 0, DateTimeKind.Unspecified), 1, 0.0, "testuser123@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "rooms",
@@ -382,7 +393,8 @@ namespace ParkView.Migrations
                     { "C-PS03", 5, 1, true, 4 },
                     { "C-PS04", 5, 1, true, 4 },
                     { "C-PS05", 5, 1, true, 4 },
-                    { "C-SD01", 5, 3, true, 2 }
+                    { "C-SD01", 5, 3, true, 2 },
+                    { "C-SD02", 5, 3, true, 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -390,7 +402,6 @@ namespace ParkView.Migrations
                 columns: new[] { "RoomId", "HotelId", "RoomCategoryId", "Status", "capacity" },
                 values: new object[,]
                 {
-                    { "C-SD02", 5, 3, true, 2 },
                     { "C-SD03", 5, 3, true, 2 },
                     { "C-SD04", 5, 3, true, 2 },
                     { "C-SD05", 5, 3, true, 2 },
@@ -431,7 +442,8 @@ namespace ParkView.Migrations
                     { "D-DX20", 2, 4, true, 2 },
                     { "D-DX21", 2, 4, true, 2 },
                     { "D-DX22", 2, 4, true, 2 },
-                    { "D-DX23", 2, 4, true, 2 }
+                    { "D-DX23", 2, 4, true, 2 },
+                    { "D-DX24", 2, 4, true, 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -439,7 +451,6 @@ namespace ParkView.Migrations
                 columns: new[] { "RoomId", "HotelId", "RoomCategoryId", "Status", "capacity" },
                 values: new object[,]
                 {
-                    { "D-DX24", 2, 4, true, 2 },
                     { "D-DX25", 2, 4, true, 2 },
                     { "D-EX01", 2, 2, true, 3 },
                     { "D-EX02", 2, 2, true, 3 },
@@ -480,7 +491,8 @@ namespace ParkView.Migrations
                     { "M-DX02", 4, 4, true, 2 },
                     { "M-DX03", 4, 4, true, 2 },
                     { "M-DX04", 4, 4, true, 2 },
-                    { "M-DX05", 4, 4, true, 2 }
+                    { "M-DX05", 4, 4, true, 2 },
+                    { "M-DX06", 4, 4, true, 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -488,7 +500,6 @@ namespace ParkView.Migrations
                 columns: new[] { "RoomId", "HotelId", "RoomCategoryId", "Status", "capacity" },
                 values: new object[,]
                 {
-                    { "M-DX06", 4, 4, true, 2 },
                     { "M-DX07", 4, 4, true, 2 },
                     { "M-DX08", 4, 4, true, 2 },
                     { "M-DX09", 4, 4, true, 2 },
@@ -529,7 +540,8 @@ namespace ParkView.Migrations
                     { "M-SD04", 4, 3, true, 2 },
                     { "M-SD05", 4, 3, true, 2 },
                     { "M-SD06", 4, 3, true, 2 },
-                    { "M-SD07", 4, 3, true, 2 }
+                    { "M-SD07", 4, 3, true, 2 },
+                    { "M-SD08", 4, 3, true, 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -537,7 +549,6 @@ namespace ParkView.Migrations
                 columns: new[] { "RoomId", "HotelId", "RoomCategoryId", "Status", "capacity" },
                 values: new object[,]
                 {
-                    { "M-SD08", 4, 3, true, 2 },
                     { "M-SD09", 4, 3, true, 2 },
                     { "M-SD10", 4, 3, true, 2 },
                     { "M-SD11", 4, 3, true, 2 },
@@ -578,7 +589,8 @@ namespace ParkView.Migrations
                     { "O-EX01", 1, 2, true, 3 },
                     { "O-EX02", 1, 2, true, 3 },
                     { "O-EX03", 1, 2, true, 3 },
-                    { "O-EX04", 1, 2, true, 3 }
+                    { "O-EX04", 1, 2, true, 3 },
+                    { "O-EX05", 1, 2, true, 3 }
                 });
 
             migrationBuilder.InsertData(
@@ -586,7 +598,6 @@ namespace ParkView.Migrations
                 columns: new[] { "RoomId", "HotelId", "RoomCategoryId", "Status", "capacity" },
                 values: new object[,]
                 {
-                    { "O-EX05", 1, 2, true, 3 },
                     { "O-EX06", 1, 2, true, 3 },
                     { "O-EX07", 1, 2, true, 3 },
                     { "O-EX08", 1, 2, true, 3 },
@@ -627,7 +638,8 @@ namespace ParkView.Migrations
                     { "S-DX08", 3, 4, true, 2 },
                     { "S-DX09", 3, 4, true, 2 },
                     { "S-DX10", 3, 4, true, 2 },
-                    { "S-DX11", 3, 4, true, 2 }
+                    { "S-DX11", 3, 4, true, 2 },
+                    { "S-DX12", 3, 4, true, 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -635,7 +647,6 @@ namespace ParkView.Migrations
                 columns: new[] { "RoomId", "HotelId", "RoomCategoryId", "Status", "capacity" },
                 values: new object[,]
                 {
-                    { "S-DX12", 3, 4, true, 2 },
                     { "S-DX13", 3, 4, true, 2 },
                     { "S-DX14", 3, 4, true, 2 },
                     { "S-DX15", 3, 4, true, 2 },
@@ -676,7 +687,8 @@ namespace ParkView.Migrations
                     { "S-SD10", 3, 3, true, 2 },
                     { "S-SD11", 3, 3, true, 2 },
                     { "S-SD12", 3, 3, true, 2 },
-                    { "S-SD13", 3, 3, true, 2 }
+                    { "S-SD13", 3, 3, true, 2 },
+                    { "S-SD14", 3, 3, true, 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -684,7 +696,6 @@ namespace ParkView.Migrations
                 columns: new[] { "RoomId", "HotelId", "RoomCategoryId", "Status", "capacity" },
                 values: new object[,]
                 {
-                    { "S-SD14", 3, 3, true, 2 },
                     { "S-SD15", 3, 3, true, 2 },
                     { "S-SD16", 3, 3, true, 2 },
                     { "S-SD17", 3, 3, true, 2 },
@@ -753,11 +764,6 @@ namespace ParkView.Migrations
                 column: "RoomId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_bookings_CouponId",
-                table: "bookings",
-                column: "CouponId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_rooms_HotelId",
                 table: "rooms",
                 column: "HotelId");
@@ -792,6 +798,12 @@ namespace ParkView.Migrations
                 name: "bookingRooms");
 
             migrationBuilder.DropTable(
+                name: "discountCoupons");
+
+            migrationBuilder.DropTable(
+                name: "temporaryData");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -802,9 +814,6 @@ namespace ParkView.Migrations
 
             migrationBuilder.DropTable(
                 name: "rooms");
-
-            migrationBuilder.DropTable(
-                name: "discountCoupons");
 
             migrationBuilder.DropTable(
                 name: "hotels");

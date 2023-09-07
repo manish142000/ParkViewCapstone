@@ -76,12 +76,33 @@ namespace ParkView.Controllers
 
             var user = _hotelDbContext.Users.FirstOrDefault(x => x.Id == userId);
 
+            TemporaryData data = _hotelDbContext.temporaryData.ToList().Last();
+
             // logic to save in the booking table
             // 
-            Booking item = _hotelDbContext.bookings.FirstOrDefault( x => x.UserEmail == user.Email );
+            Booking item = _hotelDbContext.bookings.FirstOrDefault( x => x.UserEmail == user.Email && x.CheckInDate == data.checkin && x.CheckOutDate == data.checkout );
 
             item.Status = true;
 
+            _hotelDbContext.SaveChanges();
+
+
+            List<Room> rooms = _bookingCart.GetRoomsByCartItems();
+
+            
+
+            foreach (var room in rooms)
+            {
+                BookingRoom bookingRoom = new BookingRoom
+                {
+                    RoomId = room.RoomId,
+                    BookingId = item.BookingId
+                };
+                Console.WriteLine("Here is the booking id");
+                Console.WriteLine(item.BookingId);
+                Console.WriteLine(bookingRoom.BookingId);
+                _hotelDbContext.Add(bookingRoom);
+            };
             _hotelDbContext.SaveChanges();
 
             // sending Order Id and transaction id to frontend

@@ -12,8 +12,8 @@ using ParkView.Models;
 namespace ParkView.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    [Migration("20230907070110_migration3")]
-    partial class migration3
+    [Migration("20230907141022_migration1")]
+    partial class migration1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -246,9 +246,6 @@ namespace ParkView.Migrations
                     b.Property<DateTime>("CheckOutDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CouponId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
@@ -261,8 +258,6 @@ namespace ParkView.Migrations
 
                     b.HasKey("BookingId");
 
-                    b.HasIndex("CouponId");
-
                     b.ToTable("bookings");
 
                     b.HasData(
@@ -271,7 +266,6 @@ namespace ParkView.Migrations
                             BookingId = 1,
                             CheckInDate = new DateTime(2023, 9, 15, 13, 45, 30, 0, DateTimeKind.Unspecified),
                             CheckOutDate = new DateTime(2023, 9, 23, 13, 45, 30, 0, DateTimeKind.Unspecified),
-                            CouponId = 1,
                             Status = true,
                             TotalCost = 0.0,
                             UserEmail = "testuser123@gmail.com"
@@ -374,6 +368,18 @@ namespace ParkView.Migrations
                             CouponId = 1,
                             CouponName = "DEALSFORU",
                             DiscountAmount = 10
+                        },
+                        new
+                        {
+                            CouponId = 2,
+                            CouponName = "PROMOPLUS",
+                            DiscountAmount = 20
+                        },
+                        new
+                        {
+                            CouponId = 3,
+                            CouponName = "BARGAINBLISS",
+                            DiscountAmount = 30
                         });
                 });
 
@@ -435,10 +441,6 @@ namespace ParkView.Migrations
                     b.Property<string>("RoomId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("HotelId")
                         .HasColumnType("int");
 
@@ -458,8 +460,6 @@ namespace ParkView.Migrations
                     b.HasIndex("RoomCategoryId");
 
                     b.ToTable("rooms");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Room");
 
                     b.HasData(
                         new
@@ -2940,19 +2940,6 @@ namespace ParkView.Migrations
                     b.ToTable("temporaryData");
                 });
 
-            modelBuilder.Entity("ParkView.Models.CurrentRoomsSelected", b =>
-                {
-                    b.HasBaseType("ParkView.Models.Room");
-
-                    b.Property<DateTime>("CheckInDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("CheckOutDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasDiscriminator().HasValue("CurrentRoomsSelected");
-                });
-
             modelBuilder.Entity("ParkView.Models.User", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -3017,17 +3004,6 @@ namespace ParkView.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ParkView.Models.Booking", b =>
-                {
-                    b.HasOne("ParkView.Models.DiscountCoupon", "DiscountCoupon")
-                        .WithMany()
-                        .HasForeignKey("CouponId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("DiscountCoupon");
                 });
 
             modelBuilder.Entity("ParkView.Models.BookingCartItem", b =>
