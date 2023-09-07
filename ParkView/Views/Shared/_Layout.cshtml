@@ -11,6 +11,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto+Slab:wght@300;400;500&display=swap" rel="stylesheet">
 
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     @RenderSection("head", false)
 </head>
 <body>
@@ -33,6 +36,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="BookingCart" asp-action="Index">Cart</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="AboutUs" asp-action="Index">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="ContactUs" asp-action="Index">Contact</a>
+                        </li>
                         <li>
                             <partial name="_LoginPartial">
                         </li>
@@ -45,7 +54,7 @@
     
 
     <div>
-        <main role="main" class="pb-3" id="main-content">
+        <main role="main" class="" id="main-content">
             @RenderBody()
         </main>
     </div>

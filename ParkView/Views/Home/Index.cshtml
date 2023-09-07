@@ -23,6 +23,7 @@
 <partial name="_SearchFormPartial" >
 
 @if( Model.rooms.Count > 0 ){
+        <h3 style="margin: 10px 0px; text-align: center">Room availablity at @Model.searchHotelName</h3>
         <div style="display: grid; grid-template-columns: repeat(4, 1fr);">
             @for (int i = 0; i < Model.roomTypeNames.Length; i++)
             {
@@ -36,6 +37,10 @@
                             <a class="btn btn-success" asp-controller="BookingCart" asp-action="AddToBookingCart" asp-route-RoomCategoryId=@(i+1)>Book Now</a>
                         </div>
                     </div>
+                }
+                else
+                {
+                    <h3>Sorry, no rooms available at the moment.</h3>
                 }
             }
         </div>
@@ -99,5 +104,6 @@
             </div>
         </div>
 
+        <app-root></app-root>
     }
 
