@@ -12,8 +12,8 @@ using ParkView.Models;
 namespace ParkView.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    [Migration("20230907141022_migration1")]
-    partial class migration1
+    [Migration("20230908035231_newmig1")]
+    partial class newmig1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -2914,7 +2914,7 @@ namespace ParkView.Migrations
                             RoomCategoryId = 4,
                             CategoryName = "Deluxe",
                             DailyRate = 8000,
-                            ImageUrl = "~/images/deluxe.jpeg"
+                            ImageUrl = "~/images/deluxe.jpg"
                         });
                 });
 
