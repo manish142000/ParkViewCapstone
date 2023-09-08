@@ -9,7 +9,8 @@ namespace ParkView.ViewModels
         [BindProperty]
         public string destination { get; set; }
 
-        
+
+        []
         public DateTime check_in { get; set; } = DateTime.Now;
 
         
