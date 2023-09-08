@@ -11,7 +11,14 @@
     {
         <div class="card shadow" style="width: fit-content; margin:10px auto;">
             <div class="row text-center">
-                <h3 style="text-align:center; margin-left: 0px;">Park View Ooty, Ooty</h3>
+                @{
+                    string hotelName = Model.BookingCart.BookingCartItems.First().HotelName;
+                    string location = Model.BookingCart.BookingCartItems.First().Location;
+                    DateTime checkin = Model.BookingCart.BookingCartItems.First().CheckInDate;
+                    DateTime checkout = Model.BookingCart.BookingCartItems.First().CheckOutDate;
+                    string[] s = new string[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+                }
+                <h3 style="text-align:center; margin-left: 0px;">@hotelName, @location</h3>
             </div>
             <div class="row">
                 <div class="col-2"></div>
@@ -24,14 +31,14 @@
                 <div class="col-2"></div>
             </div>
             <div class="row">
-                <div class="col-2"></div>
-                <div class="col-4">
-                    Check-In<br><span style="font-size: 2rem; font-weight: 600;">7</span>th Sept 2023
+                <div class="col-1"></div>
+                <div class="col-5">
+                    Check-In<br><span style="font-size: 2rem; font-weight: 600;">@checkin.Day</span> @s[@checkin.Month - 1] @checkin.Year
                     </div>
-                <div class="col-4">
-                    Check-Out<br><span style="font-size: 2rem; font-weight: 600;">10</span>th Sept 2023
+                <div class="col-5">
+                    Check-Out<br><span style="font-size: 2rem; font-weight: 600;">@checkout.Day</span> @s[@checkout.Month - 1] @checkout.Year
                 </div>
-                <div class="col-2"></div>
+                <div class="col-1"></div>
             </div>
         </div>
         <div class="container text-center">

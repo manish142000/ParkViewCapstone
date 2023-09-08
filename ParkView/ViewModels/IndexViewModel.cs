@@ -8,11 +8,7 @@ namespace ParkView.ViewModels
     {
         [BindProperty]
         public string destination { get; set; }
-
-
-        []
         public DateTime check_in { get; set; } = DateTime.Now;
-
         
         public DateTime check_out { get; set; } = DateTime.Now.AddDays(1);
 
