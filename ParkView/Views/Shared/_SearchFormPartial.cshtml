@@ -9,7 +9,7 @@
     List<SelectListItem> hLocations = new List<SelectListItem>();
     //hLocations.Add(new SelectListItem { Value = "select", Text = "Choose a location", Disabled = true, Selected = true });
     //foreach(var hotel in Model.hotels)
-    //{
+    //{/
     //    hLocations.Add(new SelectListItem { Value = hotel.Location, Text = hotel.Location });
     //}
     hLocations.Add(new SelectListItem { Value = "select", Text = "Choose a location", Disabled = true, Selected = true });    
@@ -19,6 +19,9 @@
     hLocations.Add(new SelectListItem { Value = "Shimla", Text = "Shimla" });
     hLocations.Add(new SelectListItem { Value = "Coorg", Text = "Coorg" });
 }
+
+
+
 <style>
     p {
         font-weight: 500;
@@ -33,11 +36,11 @@
             </div>
             <div class="col">
                 <p>Check-in</p>
-                <input asp-for="check_in" class="form-control" type="date" placeholder="Check-in" />
+                <input asp-for="check_in" id="check_in" min="" class="form-control" type="date" placeholder="Check-in" />
             </div>
             <div class="col">
                 <p>Check-out</p>
-                <input asp-for="check_out" class="form-control" type="date" placeholder="Check-out" />
+                <input asp-for="check_out" id="check_out" class="form-control" type="date" placeholder="Check-out" />
             </div>
             <div class="col">
                 <p>Rooms</p>
@@ -58,3 +61,16 @@
         </div>
     </div>
 </form>
+
+
+<script>
+    var date = new Date().toISOString().slice(0, 10);
+
+    //To restrict past date
+
+    $('#check_in').attr('min', date);
+
+    //To restrict future date
+
+    $('#check_out').attr('max', date);
+</script>
